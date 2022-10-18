@@ -30,7 +30,7 @@ public LinearEquation(int x1, int y1, int x2, int y2) */
         /* Calculates and returns the y-intercept of the line between (x1, y1) and
            (x2, y2), rounded to the nearest hundredth */
         public double yIntercept(){
-                return roundedToHundredth(y1-(slope()*x1));
+                return roundedToHundredth((double)y1-(slope()*x1));
         }
 
 
@@ -38,7 +38,7 @@ public LinearEquation(int x1, int y1, int x2, int y2) */
         /* Calculates and returns the slope of the line between (x1, y1) and
            (x2, y2), rounded to the nearest hundredth */
         public double slope(){
-                return roundedToHundredth((y2-y1)/(x2-1));
+                return roundedToHundredth(((double)y2-y1)/((double)x2-x1));
         }
 
 
@@ -68,7 +68,66 @@ public LinearEquation(int x1, int y1, int x2, int y2) */
                    subtraction!
          */
         public String equation(){
-                return "y = " + (y2-y1) + "/" + (x2-x1) + "x + " + yIntercept();
+                if (((double)y2-y1)/((double)x2-x1) == 1) {
+                        if(yIntercept() == 0) {
+                              return "y = x";
+                        }
+                        return "y = " + "x + " + yIntercept();
+                }
+                if (((double)y2-y1)/((double)x2-x1) == -1) {
+                        if(yIntercept()==0) {
+                                return "y = -x";
+                        }
+                        return "y = " + "-x + " + yIntercept();
+                }
+                if (slope()==0){
+                        if ((int) yIntercept() == (double) yIntercept()) {
+                                return "y = " + (int) yIntercept();
+                        }
+                        return "y = " + yIntercept();
+                }
+
+                if (((double)y2-y1)/((double)x2-x1) == (int) (y2-y1)/(x2-x1)) {
+                        if(yIntercept()<0) {
+                                return "y = " + (y2-y1)/(x2-x1) + "x - " + Math.abs(yIntercept());
+                        }
+                        if(yIntercept()==0) {
+                                return "y = " + (y2-y1)/(x2-x1) + "x";
+                        }
+                        else {
+                                return "y = " + (y2-y1)/(x2-x1) + "x + " + yIntercept();
+                        }
+
+                } else if (((double)y2-y1)/((double)x2-x1) != (int) (y2-y1)/(x2-x1)){
+                        if(yIntercept()<0) {
+                                if((y2-y1)<0 && (x2-x1)<0) {
+                                        return "y = " + Math.abs(y2 - y1) + "/" + Math.abs(x2 - x1) + "x - " + Math.abs(yIntercept());
+                                }
+                                else if((y2-y1)<0 || (x2-x1)<0) {
+                                        return "y = " + "-" + Math.abs(y2 - y1) + "/" + Math.abs(x2 - x1) + "x - " + Math.abs(yIntercept());
+                                }
+                                return "y = " + (y2 - y1) + "/" + (x2 - x1) + "x - " + Math.abs(yIntercept());
+                        }
+                        if(yIntercept()==0) {
+                                if((y2-y1)<0 && (x2-x1)<0) {
+                                        return "y = " + Math.abs(y2 - y1) + "/" + Math.abs(x2 - x1) + "x";
+                                }
+                                else if((y2-y1)<0 || (x2-x1)<0) {
+                                        return "y = " + "-" + Math.abs(y2 - y1) + "/" + Math.abs(x2 - x1) + "x - " + Math.abs(yIntercept());
+                                }
+                                return "y = " + (y2 - y1) + "/" + (x2 - x1) + "x";
+                        }else {
+                                if((y2-y1)<0 && (x2-x1)<0) {
+                                        return "y = " + Math.abs(y2 - y1) + "/" + Math.abs(x2 - x1) + "x + " + yIntercept();
+                                }
+                                else if((y2-y1)<0 || (x2-x1)<0) {
+                                        return "y = " + "-" + Math.abs(y2 - y1) + "/" + Math.abs(x2 - x1) + "x - " + Math.abs(yIntercept());
+                                }
+                                return "y = " + (y2 - y1) + "/" + (x2 - x1) + "x + " + yIntercept();
+                        }
+
+                }
+                return null;
         }
 
 
@@ -91,7 +150,8 @@ public LinearEquation(int x1, int y1, int x2, int y2) */
             HINT:  the Math.round method can help with this!
          */
         public double roundedToHundredth(double toRound){
-                return Math.round(toRound*100)/100;
+
+                return (double) Math.round(toRound*100)/100;
         }
 
 
@@ -109,10 +169,10 @@ public LinearEquation(int x1, int y1, int x2, int y2) */
 
           */
         public String lineInfo(){
-                return "The Original points are: " + "(" + x1 + ", " + y1 + ")" + "and " + "(" + x2 + ", " + y2 + ")" + "\n"
+                return "The Original points are: " + "(" + x1 + ", " + y1 + ")" + " and " + "(" + x2 + ", " + y2 + ")" + "\n"
                 + "Equation in y = mx+b form: " + equation() + "\n"
                 + "Slope: " + slope() + "\n"
-                + "y=intercept: " + yIntercept() + "\n"
+                + "y-intercept: " + yIntercept() + "\n"
                 + "Distance between the two points: " + distance();
         }
 
